@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Factorio;
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 
 // ReSharper disable once InconsistentNaming
@@ -12,15 +11,6 @@ public class SpawnerAuthoring_FromFile : MonoBehaviour, IDeclareReferencedPrefab
 
     public DataFromFile dataFromFile;
 
-    public void Awake()
-    {
-        dataFromFile.Machines = new[]
-        {
-            new Machine(0, new float3(0, 0, 0)),
-            new Machine(1, new float3(1, 0, 0)),
-        };
-    }
-
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
     public void DeclareReferencedPrefabs(List<GameObject> gameObjects)
     {
@@ -28,7 +18,6 @@ public class SpawnerAuthoring_FromFile : MonoBehaviour, IDeclareReferencedPrefab
     }
 
     // Lets you convert the editor data representation to the entity optimal runtime representation
-
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddBuffer<EntityBuffer>(entity);
@@ -39,7 +28,7 @@ public class SpawnerAuthoring_FromFile : MonoBehaviour, IDeclareReferencedPrefab
         dstManager.AddBuffer<MachineBuffer>(entity);
         var machineBuffer = dstManager.GetBuffer<MachineBuffer>(entity);
         foreach (var machine in dataFromFile.Machines)
-            machineBuffer.Add(new MachineComponentData
+            machineBuffer.Add(new Machine
             {
                 Type = machine.Type,
                 Position = machine.Position

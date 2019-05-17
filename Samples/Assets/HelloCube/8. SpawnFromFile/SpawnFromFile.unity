@@ -244,6 +244,28 @@ MonoBehaviour:
   Prefabs:
   - {fileID: 7756226592167583472, guid: 395749a43cb0b0249913d363d135f833, type: 3}
   - {fileID: 5676250223829812978, guid: 2ca5f706d0128c146beaa4bd6b4331e7, type: 3}
+  dataFromFile:
+    Machines:
+    - Type: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+    - Type: 1
+      Position:
+        x: 1
+        y: 0
+        z: 0
+    - Type: 0
+      Position:
+        x: 2
+        y: 0
+        z: 0
+    - Type: 1
+      Position:
+        x: 3
+        y: 0
+        z: 0
 --- !u!4 &236904949
 Transform:
   m_ObjectHideFlags: 0

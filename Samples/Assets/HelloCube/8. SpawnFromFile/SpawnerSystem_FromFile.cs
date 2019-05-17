@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 // JobComponentSystems can run on worker threads.
 // However, creating and removing Entities can only be done on the main thread to prevent race conditions.
@@ -38,11 +39,12 @@ public class SpawnerSystem_FromFile : JobComponentSystem
         {
             for (int i = 0; i < machineBuffer[entity].Length; i++)
             {
-                var machine = machineBuffer[entity][i];
-                var instance = CommandBuffer.Instantiate(index, prefabBuffer[entity][machine.Value.Type]);
-                // Place the instantiated in a grid with some noise
-                var position = math.transform(location.Value, machine.Value.Position);
+                var machine = machineBuffer[entity][i].Value;
+                var prefab = prefabBuffer[entity][machine.Type].Value;
+                var instance = CommandBuffer.Instantiate(index, prefab);
+                var position = math.transform(location.Value, machine.Position);
                 CommandBuffer.SetComponent(index, instance, new Translation {Value = position});
+                CommandBuffer.AddComponent(index, instance, new MachineComponentData {Type = machine.Type});
             }
 
             CommandBuffer.DestroyEntity(index, entity);
